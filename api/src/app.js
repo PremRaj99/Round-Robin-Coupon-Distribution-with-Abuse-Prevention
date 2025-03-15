@@ -5,7 +5,6 @@ import cookieParser from "cookie-parser";
 import { CORS_ORIGIN } from "./constant.js";
 import path from "path";
 
-
 const app = express();
 
 app.use(express.json({ limit: "10mb" }));
@@ -30,10 +29,15 @@ app.get("/", (req, res) => {
 
 // import routes here
 import authRouter from "./routes/auth.route.js";
-
+import abuseReportRouter from "./routes/abuseReport.route.js";
+import couponRouter from "./routes/coupon.route.js";
+import userRouter from "./routes/user.route.js";
 
 // define routes here
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/abuse", abuseReportRouter);
+app.use("/api/v1/coupons", couponRouter);
+app.use("/api/v1/users", userRouter);
 
 // serve files here
 app.use(express.static(path.join(__dirname, "../client", "/dist")));
@@ -44,13 +48,13 @@ app.get("*", (req, res) => {
 
 // error handler
 app.use((err, req, res, next) => {
-    console.log(err.message);
-    return res.status(err.statusCode || 500).json({
-      statusCode: err.statusCode || 500,
-      data: null,
-      message: err.message || "Internal Server Error",
-      success: false,
-    });
+  console.log(err.message);
+  return res.status(err.statusCode || 500).json({
+    statusCode: err.statusCode || 500,
+    data: null,
+    message: err.message || "Internal Server Error",
+    success: false,
   });
+});
 
 export default app;

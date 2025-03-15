@@ -15,10 +15,9 @@ export const authorizeRoles = (...allowedRoles) => {
 class Role {
   static Admin = "admin";
   static User = "user";
-  static Therapist = "therapist";
 
   static getAll() {
-    return [Role.Admin, Role.Therapist, Role.User];
+    return [Role.Admin, Role.User];
   }
 }
 

@@ -1,0 +1,67 @@
+users [icon: user, color: blue] {
+  _id string pk
+  fullName string
+  username string
+  email string
+  phone string
+  isEmailVerified boolean
+  isPhoneVerified boolean
+  profilePicture string
+  password string
+  role enum [admin, user]
+  refreshToken string
+  isBlocked boolean
+  isDeleted boolean
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+coupons [icon: coupon, color: orange] {
+  _id string pk
+  couponCode string
+  discount number
+  minPurchaseAmount number
+  maxUsage number
+  usageCount number
+  expiresOn timestamp
+  status enum [active, expired, disabled]
+  allowedUsers string[] fk
+  blacklistedUsers string[] fk
+  allowedMultipleUsage boolean
+  isGlobal boolean
+  isDeleted boolean
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+couponDistribution [icon: shuffle, color: green] {
+  _id string pk
+  couponId string fk
+  userId string fk
+  assignedAt timestamp
+  isRedeemed boolean
+  redeemedAt timestamp
+  abuseFlag boolean
+}
+
+transactions [icon: credit-card, color: teal] {
+  _id string pk
+  userId string fk
+  couponId string fk
+  amount number
+  discountApplied number
+  finalAmount number
+  paymentMethod enum [cash, card, online]
+  status enum [pending, completed, failed]
+  createdAt timestamp
+}
+
+abuseReports [icon: warning, color: red] {
+  _id string pk
+  userId string fk
+  couponId string fk
+  reason string
+  reportedAt timestamp
+  status enum [pending, reviewed, actionTaken]
+}
+
